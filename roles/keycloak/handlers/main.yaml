@@ -1,0 +1,16 @@
+- name: "Reload daemon of systemd user"
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+- name: "Restart postgres daemon"
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+    name: kc-postgres.service
+    state: restarted
+- name: "Restart keycloak daemon"
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+    name: kc-keycloak.service
+    state: restarted

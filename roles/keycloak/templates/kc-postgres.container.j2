@@ -1,0 +1,14 @@
+[Service]
+TimeoutStartSec=900
+
+[Container]
+ContainerName=postgres
+Pod=kc.pod
+Image=docker.io/library/postgres:18
+Volume=pgdata:/var/lib/postgresql:Z
+Environment=POSTGRES_USER=keycloak
+Environment=POSTGRES_DB=keycloak
+EnvironmentFile={{ keycloak_postgres_secrets_file | regex_replace('^~', '%h') }}
+
+[Install]
+WantedBy=multi-user.target default.target

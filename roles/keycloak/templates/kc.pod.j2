@@ -1,0 +1,10 @@
+[Service]
+TimeoutStartSec=900
+
+[Pod]
+PodName=kc
+PublishPort={{ keycloak_publish_port }}:8080
+; PublishPort=127.0.0.1:9000:9000
+
+[Install]
+WantedBy=multi-user.target default.target

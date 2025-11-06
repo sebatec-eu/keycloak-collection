@@ -1,0 +1,31 @@
+[Unit]
+Description=Keycloak
+
+[Service]
+TimeoutStartSec=900
+
+[Container]
+Pod=kc.pod
+ContainerName=keycloak
+Image=quay.io/keycloak/keycloak:26.4
+Pull=newer
+; Exec=start --optimized
+Exec=start --proxy-headers forwarded --hostname-strict=false --http-enabled=true --hostname-debug=true
+Environment=KC_HEALTH_ENABLED=true
+Environment=KC_METRICS_ENABLED=true
+Environment=KC_DB=postgres
+Environment=KC_DB_URL=jdbc:postgresql://127.0.0.1:5432/keycloak
+Environment=KC_DB_USERNAME=keycloak
+EnvironmentFile={{ keycloak_keycloak_secrets_file | regex_replace('^~', '%h') }}
+
+Volume=keycloak_data:/opt/keycloak/data:Z
+Volume=keycloak_themes:/opt/keycloak/themes:Z
+
+HealthCmd=/usr/bin/timeout 3 bash -c 'exec 3<>/dev/tcp/127.0.0.1/9000; printf "HEAD /health/live HTTP/1.0\r\n\r\n" >&3; head -n1 <&3 | grep -q " 200 "'
+HealthOnFailure=kill
+
+HealthStartPeriod=2m30s
+HealthStartupCmd=/usr/bin/timeout 3 bash -c 'exec 3<>/dev/tcp/127.0.0.1/9000; printf "HEAD /health/ready HTTP/1.0\r\n\r\n" >&3; head -n1 <&3 | grep -q " 200 "'
+
+[Install]
+WantedBy=multi-user.target default.target

@@ -1,0 +1,6 @@
+caddy_caddyfile_path: /etc/caddy/Caddyfile
+caddy_service_unit: caddy.service
+caddy_default_hostname: ":80"
+caddy_global_options: []
+caddy_realms: []
+caddy_keycloak_endpoint: 127.0.0.1:8080

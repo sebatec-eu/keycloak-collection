@@ -1,0 +1,29 @@
+---
+- name: Setup vagrant
+  gather_facts: true
+  hosts: default
+  vars:
+    caddy_global_options:
+      # - debug
+      - auto_https off
+    caddy_realms:
+      - name: testrealm
+        domain: http://localhost:8081
+    # keycloak_postgres_password: ..test..
+    # keycloak_bootstrap_mode: true
+    # keycloak_bootstrap_admin:
+    #   password: ..test..
+  handlers: []
+  tasks:
+    - name: Install helpfull packages
+      become: true
+      ansible.builtin.package:
+        name:
+          - htop
+        state: present
+  roles:
+    - base
+    - role: keycloak
+      become: true
+      become_user: "keycloak"
+    - caddy

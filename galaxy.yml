@@ -1,0 +1,33 @@
+#SPDX-License-Identifier: MIT
+namespace: sebatec_eu
+name: keycloak_collection
+version: 1.0.0
+readme: README.md
+authors:
+  - Sebastian Schulz <16666034+seb-schulz@users.noreply.github.com>
+
+description: |
+  Ansible Collection for Keycloak on Hetzner Cloud or locally with
+  Vagrant. Installs fail2ban, Caddy, and Podman (Postgres/Keycloak as
+  containers) and supports multi-realm setups with custom branding and
+  social logins per domain (e.g., auth.example1.com).
+
+license:
+  - MIT
+
+license_file: "LICENSE"
+
+tags:
+  - keycloak
+  - authentication
+  - infrastructure
+  - podman
+  - caddy
+
+dependencies: {}
+
+repository: https://github.com/sebatec-eu/keycloak-collection
+# documentation: http://docs.example.com
+homepage: https://www.sebatec.eu/
+issues: https://github.com/sebatec-eu/keycloak-collection/issues
+build_ignore: []

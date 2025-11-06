@@ -1,0 +1,110 @@
+---
+- name: Check variables of postgres
+  ansible.builtin.assert:
+    that: keycloak_postgres_password != 'UNSET'
+    fail_msg: "Set postgres password"
+  when: keycloak_bootstrap_mode
+- name: Check variables when running boostrap mode
+  ansible.builtin.assert:
+    that: keycloak_bootstrap_admin.password != 'UNSET'
+    fail_msg: "Set random password to `keycloak_bootstrap_admin.password`"
+  when: keycloak_bootstrap_mode
+- name: Create config directory
+  ansible.builtin.file:
+    path: "{{ item | dirname }}"
+    state: directory
+    mode: "0755"
+  with_list:
+    - "{{ keycloak_pod_file }}"
+    - "{{ keycloak_postgres_container_file }}"
+    - "{{ keycloak_keycloak_container_file }}"
+- name: Provide pod file
+  ansible.builtin.template:
+    mode: "u+wr,g+rw,o+r"
+    src: kc.pod.j2
+    dest: "{{ keycloak_pod_file }}"
+  notify: "Reload daemon of systemd user"
+- name: Provide postgres volume
+  ansible.builtin.template:
+    mode: "u+wr,g+rw,o+r"
+    src: pgdata.volume.j2
+    dest: "{{ keycloak_postgres_volume_file }}"
+- name: Provide keycloak data volume
+  ansible.builtin.template:
+    mode: "u+wr,g+rw,o+r"
+    src: keycloak_data.volume.j2
+    dest: "{{ keycloak_keycloak_data_volume_file }}"
+- name: Provide keycloak themes volume
+  ansible.builtin.template:
+    mode: "u+wr,g+rw,o+r"
+    src: keycloak_themes.volume.j2
+    dest: "{{ keycloak_keycloak_themes_volume_file }}"
+- name: Provide postgres quatle file
+  ansible.builtin.template:
+    mode: "u+wr,g+rw,o+r"
+    src: kc-postgres.container.j2
+    dest: "{{ keycloak_postgres_container_file }}"
+  notify: "Restart postgres daemon"
+- name: Provide keycloak quatle file
+  ansible.builtin.template:
+    mode: "u+wr,g+rw,o+r"
+    src: kc-keycloak.container.j2
+    dest: "{{ keycloak_keycloak_container_file }}"
+  notify: "Restart keycloak daemon"
+- name: Boostrap keycloak
+  when: keycloak_bootstrap_mode
+  block:
+    - name: Ensure postgres secrets file exists
+      ansible.builtin.file:
+        state: touch
+        mode: "0400"
+        path: "{{ keycloak_postgres_secrets_file }}"
+    - name: Ensure keycloak secret file exists
+      ansible.builtin.file:
+        state: touch
+        mode: "0400"
+        path: "{{ keycloak_keycloak_secrets_file }}"
+    - name: Provide postgres secrets
+      ansible.builtin.blockinfile:
+        path: "{{ keycloak_postgres_secrets_file }}"
+        mode: "0400"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR DB"
+        block: |
+          POSTGRES_PASSWORD={{ keycloak_postgres_password }}
+      notify: "Restart postgres daemon"
+    - name: Provide password for the database
+      ansible.builtin.blockinfile:
+        path: "{{ keycloak_keycloak_secrets_file }}"
+        mode: "0400"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR DB"
+        block: |
+          KC_DB_PASSWORD={{ keycloak_postgres_password }}
+      notify: "Restart keycloak daemon"
+      when: keycloak_bootstrap_mode
+    - name: Provide boostrap accounts
+      ansible.builtin.blockinfile:
+        path: "{{ keycloak_keycloak_secrets_file }}"
+        mode: "0400"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK FOR BOOSTRAPPING"
+        block: |
+          KC_BOOTSTRAP_ADMIN_USERNAME=admin
+          KC_BOOTSTRAP_ADMIN_PASSWORD={{ keycloak_bootstrap_admin.password }}
+      notify: "Restart keycloak daemon"
+- name: Ensure postgres secrets file exists
+  ansible.builtin.file:
+    state: file
+    mode: "0400"
+    path: "{{ keycloak_postgres_secrets_file }}"
+- name: Ensure keycloak secret file exists
+  ansible.builtin.file:
+    state: file
+    mode: "0400"
+    path: "{{ keycloak_keycloak_secrets_file }}"
+- name: Ensure boostrap data is removed
+  ansible.builtin.blockinfile:
+    path: "{{ keycloak_keycloak_secrets_file }}"
+    mode: "0400"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR BOOSTRAPPING"
+    state: absent
+  notify: "Restart keycloak daemon"
+  when: not keycloak_bootstrap_mode

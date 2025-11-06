@@ -1,0 +1,39 @@
+{
+  "name": "keycloak-collection",
+  "image": "ghcr.io/sebatec-eu/python-devcontainer:1",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
+      "packages": "bash-completion,pwgen"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "ansible.python.interpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+        // "ansible.ansible.path": "${containerWorkspaceFolder}/venv/bin/ansible",
+        "yaml.schemas": {
+          "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "playbooks/*.yaml",
+          "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
+        }
+      },
+      "extensions": [
+        "vscoss.vscode-ansible",
+        "redhat.vscode-yaml",
+        "redhat.ansible",
+        "timonwong.shellcheck",
+        "eeyore.yapf",
+        "openai.chatgpt"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.codex,target=/home/vscode/.codex,type=bind,consistency=cached"
+  ],
+  "runArgs": ["--userns=keep-id"],
+  "containerUser": "vscode",
+  "onCreateCommand": "uv tool install ansible-lint && uv tool install ansible"
+  //   "postCreateCommand": "make setup"
+}

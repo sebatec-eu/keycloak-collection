@@ -1,0 +1,14 @@
+- name: Provide Caddyfile file
+  become: true
+  ansible.builtin.template:
+    mode: "u+wr,g+r,o+r"
+    src: Caddyfile.j2
+    dest: "{{ caddy_caddyfile_path }}"
+    # validate: /usr/bin/caddy validate --config "%s"
+  notify: "Restart caddy service"
+- name: Ensure caddy is running
+  become: true
+  ansible.builtin.systemd_service:
+    name: "{{ caddy_service_unit }}"
+    enabled: true
+    state: started

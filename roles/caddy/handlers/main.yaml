@@ -1,0 +1,5 @@
+- name: Restart caddy service
+  become: true
+  ansible.builtin.systemd_service:
+    name: "{{ caddy_service_unit }}"
+    state: restarted

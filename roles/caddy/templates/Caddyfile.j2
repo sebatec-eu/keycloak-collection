@@ -1,0 +1,34 @@
+{{ ansible_managed | comment }}
+{% if caddy_global_options|length > 0 %}
+{
+{% for item in caddy_global_options %}
+	{{ item }}
+{% endfor %}
+}
+{% endif %}
+
+{{ caddy_default_hostname }} {
+	log
+	skip_log /resources* # XXX: Prior to v2.8.0 this directive was named skip_log rather then log_skip
+	reverse_proxy {{ caddy_keycloak_endpoint }}
+}
+
+{% for realm in caddy_realms %}
+{{ realm.domain }} {
+	# Enable logging for fail2ban
+	log
+	skip_log /resources* # XXX: Prior to v2.8.0 this directive was named skip_log rather then log_skip
+
+	rewrite /.well-known/openid-configuration /realms/{{ realm.name }}/.well-known/openid-configuration
+
+	@realm path /realms/{{ realm.name }} /realms/{{ realm.name }}/*
+	handle @realm {
+		reverse_proxy {{ caddy_keycloak_endpoint }}
+	}
+
+	respond "Forbidden" 403
+}
+{% endfor %}
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile

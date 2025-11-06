@@ -1,0 +1,10 @@
+base_packages:
+  - fail2ban
+  - caddy
+  - podman
+  - curl
+  - acl
+  - jq
+base_username: keycloak
+base_uid_min: 1500
+base_uid_max: 1599
