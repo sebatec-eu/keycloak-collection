@@ -1,0 +1,10 @@
+[INCLUDES]
+
+before = common.conf
+
+[Definition]
+script = \S*(?:php(?:[0-9]+(?:\.[0-9]+)*)?(?:[.-]cgi)?|phtml|\.aspx?|\.jspx?|\.cfm|\.exe|\.pl|\.py|\.rb|\bcgi-bin\b|/wp-login\.php|/xmlrpc\.php|/phpmyadmin|/manager/html|/\.env|/composer\.(?:json|lock)|/\.git(?:/|$))
+
+prefregex = ^.+\"request\":\{<F-CONTENT>.+</F-CONTENT>\}$
+failregex = ^\"remote_ip\":\"<HOST>\".+\"uri\":\"%(script)s.*\".+$
+journalmatch = _SYSTEMD_UNIT=caddy.service

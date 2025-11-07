@@ -1,0 +1,7 @@
+[INCLUDES]
+
+before = common.conf
+
+[Definition]
+failregex = ^.+type=\"LOGIN_ERROR\".+ipAddress=\"<HOST>\".+$
+journalmatch = _SYSTEMD_USER_UNIT="kc-keycloak.service"

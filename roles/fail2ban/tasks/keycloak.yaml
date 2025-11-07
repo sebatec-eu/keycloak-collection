@@ -1,0 +1,13 @@
+---
+- name: Provide keycloak filter
+  ansible.builtin.copy:
+    src: "filter.d/keycloak.local"
+    dest: "{{ fail2ban_keycloak_filter_path }}"
+    mode: "u+rw,g+r,o+r"
+  notify: "Restart fail2ban service"
+- name: Provide keycloak jail
+  ansible.builtin.template:
+    src: "jail.d/keycloak.local.j2"
+    dest: "{{ fail2ban_keycloak_jail_path }}"
+    mode: "u+rw,g+r,o+r"
+  notify: "Restart fail2ban service"

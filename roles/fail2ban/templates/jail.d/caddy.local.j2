@@ -1,0 +1,5 @@
+{{ ansible_managed | comment }}
+[caddy-scanbot]
+enabled = {{ fail2ban_caddy_scanbot_jail_enabled | default(false) }}
+backend = {{ fail2ban_caddy_scanbot_jail_backend }}
+ignoreself = {{ fail2ban_caddy_scanbot_jail_ignoreself | default(false) }}

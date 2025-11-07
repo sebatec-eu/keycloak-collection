@@ -1,0 +1,6 @@
+{{ ansible_managed | comment }}
+
+[DEFAULT]
+backend = {{ fail2ban_jail_backend | default('auto') }}
+{% if fail2ban_jail_action != 'UNSET' %}action = {{ fail2ban_jail_action }}
+{% endif %}

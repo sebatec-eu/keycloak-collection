@@ -13,6 +13,7 @@
     # keycloak_bootstrap_mode: true
     # keycloak_bootstrap_admin:
     #   password: ..test..
+    fail2ban_jail_action: dummy
   handlers: []
   tasks:
     - name: Install helpfull packages
@@ -27,3 +28,5 @@
       become: true
       become_user: "keycloak"
     - caddy
+    - role: fail2ban
+      become: true

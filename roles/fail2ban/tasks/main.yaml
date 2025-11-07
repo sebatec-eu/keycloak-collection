@@ -1,0 +1,32 @@
+- name: Ensure fail2ban directories
+  ansible.builtin.file:
+    path: "{{ fail2ban_systemd_sysout_path | dirname }}"
+    mode: "u+rwx,g+rx,o+rx"
+    state: directory
+- name: Force fail2ban to log to journald
+  ansible.builtin.copy:
+    src: sysout.conf
+    dest: "{{ fail2ban_systemd_sysout_path }}"
+    mode: "u+rw,g+r,o+r"
+  notify: "Restart fail2ban service"
+- name: Provide jail configuration
+  ansible.builtin.template:
+    src: jail.local.j2
+    dest: "{{ fail2ban_jail_config_path }}"
+    mode: "u+rw,g+r,o+r"
+  notify: "Restart fail2ban service"
+- name: Setup recidive jail
+  ansible.builtin.template:
+    src: "jail.d/recidive.local.j2"
+    dest: "{{ fail2ban_jail_recidive_path }}"
+    mode: "u+rw,g+r,o+r"
+  notify: "Restart fail2ban service"
+- name: Include keycloak configuration
+  ansible.builtin.import_tasks: keycloak.yaml
+- name: Include caddy configuration
+  ansible.builtin.import_tasks: caddy.yaml
+- name: Ensure fail2ban is always running
+  ansible.builtin.systemd_service:
+    name: "{{ fail2ban_systemd_service }}"
+    enabled: true
+    state: started

@@ -1,0 +1,13 @@
+---
+- name: Provide caddy scanbot filter
+  ansible.builtin.copy:
+    src: "filter.d/caddy-scanbot.local"
+    dest: "{{ fail2ban_caddy_scanbot_filter_path }}"
+    mode: "u+rw,g+r,o+r"
+  notify: "Restart fail2ban service"
+- name: Provide keycloak jail
+  ansible.builtin.template:
+    src: "jail.d/caddy.local.j2"
+    dest: "{{ fail2ban_caddy_jail_path }}"
+    mode: "u+rw,g+r,o+r"
+  notify: "Restart fail2ban service"

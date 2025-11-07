@@ -1,0 +1,19 @@
+fail2ban_systemd_sysout_path: /etc/systemd/system/fail2ban.service.d/10-sysout.conf
+fail2ban_jail_backend: systemd
+fail2ban_jail_action: UNSET
+fail2ban_jail_config_path: "/etc/fail2ban/jail.local"
+fail2ban_systemd_service: "fail2ban.service"
+fail2ban_jail_recidive_path: "/etc/fail2ban/jail.d/recidive.local"
+fail2ban_jail_recidive_enabled: false
+
+fail2ban_keycloak_filter_path: "/etc/fail2ban/filter.d/keycloak.local"
+fail2ban_keycloak_jail_path: "/etc/fail2ban/jail.d/keycloak.local"
+fail2ban_keycloak_jail_enabled: true
+fail2ban_keycloak_jail_backend: systemd[journalflags=1]
+fail2ban_keycloak_jail_ignoreself: false
+
+fail2ban_caddy_scanbot_filter_path: "/etc/fail2ban/filter.d/caddy-scanbot.local"
+fail2ban_caddy_jail_path: "/etc/fail2ban/jail.d/caddy.local"
+fail2ban_caddy_scanbot_jail_enabled: true
+fail2ban_caddy_scanbot_jail_backend: systemd
+fail2ban_caddy_scanbot_jail_ignoreself: false
