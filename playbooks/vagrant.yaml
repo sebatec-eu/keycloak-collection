@@ -3,17 +3,17 @@
   gather_facts: true
   hosts: default
   vars:
+    fail2ban_jail_action: dummy
     caddy_global_options:
       # - debug
       - auto_https off
     caddy_realms:
       - name: testrealm
         domain: http://localhost:8081
-    # keycloak_postgres_password: ..test..
-    # keycloak_bootstrap_mode: true
-    # keycloak_bootstrap_admin:
-    #   password: ..test..
-    fail2ban_jail_action: dummy
+    keycloak_postgres_password: ..test..
+    keycloak_bootstrap_mode: true
+    keycloak_bootstrap_admin:
+      password: ..test..
   handlers: []
   tasks:
     - name: Install helpfull packages

@@ -10,7 +10,8 @@ ContainerName=keycloak
 Image=quay.io/keycloak/keycloak:26.4
 Pull=newer
 ; Exec=start --optimized
-Exec=start --proxy-headers forwarded --hostname-strict=false --http-enabled=true --hostname-debug=true
+Exec=start --proxy-headers forwarded --hostname-strict=false --http-enabled=true --features-disabled="admin-fine-grained-authz,authorization,ciba,dpop,impersonation,kerberos,opentelemetry,par"
+
 Environment=KC_HEALTH_ENABLED=true
 Environment=KC_METRICS_ENABLED=true
 Environment=KC_DB=postgres

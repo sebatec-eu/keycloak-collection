@@ -21,7 +21,7 @@
 
 	rewrite /.well-known/openid-configuration /realms/{{ realm.name }}/.well-known/openid-configuration
 
-	@realm path /realms/{{ realm.name }} /realms/{{ realm.name }}/*
+	@realm path /realms/{{ realm.name }} /realms/{{ realm.name }}/* /resources/*
 	handle @realm {
 		reverse_proxy {{ caddy_keycloak_endpoint }}
 	}
