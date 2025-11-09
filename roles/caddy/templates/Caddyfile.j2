@@ -13,16 +13,20 @@
 	reverse_proxy {{ caddy_keycloak_endpoint }}
 }
 
-{% for realm in caddy_realms %}
-{{ realm.domain }} {
+{% for domain, realms in caddy_realms | groupby("domain") %}
+{{ domain }} {
 	# Enable logging for fail2ban
 	log
 	skip_log /resources* # XXX: Prior to v2.8.0 this directive was named skip_log rather then log_skip
 
-	rewrite /.well-known/openid-configuration /realms/{{ realm.name }}/.well-known/openid-configuration
+	{% if realms|length <= 1 %}
+	redir / /realms/{{ realms.0.name }}/account/
+	rewrite /.well-known/openid-configuration /realms/{{ realms.0.name }}/.well-known/openid-configuration
+	{% endif %}
 
-	@realm path /realms/{{ realm.name }} /realms/{{ realm.name }}/* /resources/*
-	handle @realm {
+	@realms path /resources/* {% for realm in realms %} /realms/{{ realm.name }} /realms/{{ realm.name }}/*{% endfor %}
+
+	handle @realms {
 		reverse_proxy {{ caddy_keycloak_endpoint }}
 	}
 
