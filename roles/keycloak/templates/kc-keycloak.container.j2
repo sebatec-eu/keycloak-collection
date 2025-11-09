@@ -20,7 +20,6 @@ Environment=KC_DB_USERNAME=keycloak
 EnvironmentFile={{ keycloak_keycloak_secrets_file | regex_replace('^~', '%h') }}
 
 Volume=keycloak_data:/opt/keycloak/data:Z
-Volume=keycloak_themes:/opt/keycloak/themes:Z
 
 HealthCmd=/usr/bin/timeout 3 bash -c 'exec 3<>/dev/tcp/127.0.0.1/9000; printf "HEAD /health/live HTTP/1.0\r\n\r\n" >&3; head -n1 <&3 | grep -q " 200 "'
 HealthOnFailure=kill

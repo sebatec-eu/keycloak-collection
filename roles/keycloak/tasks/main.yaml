@@ -34,11 +34,6 @@
     mode: "u+wr,g+rw,o+r"
     src: keycloak_data.volume.j2
     dest: "{{ keycloak_keycloak_data_volume_file }}"
-- name: Provide keycloak themes volume
-  ansible.builtin.template:
-    mode: "u+wr,g+rw,o+r"
-    src: keycloak_themes.volume.j2
-    dest: "{{ keycloak_keycloak_themes_volume_file }}"
 - name: Provide postgres quatle file
   ansible.builtin.template:
     mode: "u+wr,g+rw,o+r"

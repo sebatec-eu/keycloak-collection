@@ -5,7 +5,6 @@ keycloak_postgres_volume_file: "~/.config/containers/systemd/pgdata.volume"
 keycloak_postgres_secrets_file: "~/.postgres.env"
 keycloak_postgres_password: UNSET
 keycloak_keycloak_data_volume_file: "~/.config/containers/systemd/keycloak_data.volume"
-keycloak_keycloak_themes_volume_file: "~/.config/containers/systemd/keycloak_themes.volume"
 keycloak_keycloak_container_file: "~/.config/containers/systemd/{{ keycloak_pod_name }}-keycloak.container"
 keycloak_keycloak_secrets_file: "~/.keycloak.env"
 keycloak_bootstrap_mode: false
