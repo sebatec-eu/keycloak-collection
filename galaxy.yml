@@ -1,4 +1,4 @@
-#SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: MIT
 namespace: sebatec_eu
 name: keycloak_collection
 version: 1.0.0
