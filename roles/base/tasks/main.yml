@@ -1,7 +1,7 @@
 ---
 - name: Install required packages (fail2ban, podman, caddy)
   become: true
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name: "{{ base_packages }}"
     state: present
 - name: "Create user for keycloak: {{ base_username }}"
