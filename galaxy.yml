@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 namespace: sebatec_eu
 name: keycloak_collection
-version: 1.0.2
+version: 1.0.3
 readme: README.md
 authors:
   - Sebastian Schulz <16666034+seb-schulz@users.noreply.github.com>
