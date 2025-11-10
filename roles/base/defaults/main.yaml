@@ -1,3 +1,4 @@
+base_packages_install_recommends: true
 base_packages:
   - fail2ban
   - caddy

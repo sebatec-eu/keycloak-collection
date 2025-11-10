@@ -3,6 +3,7 @@
   become: true
   ansible.builtin.apt:
     name: "{{ base_packages }}"
+    install_recommends: "{{ base_packages_install_recommends }}"
     state: present
 - name: "Create user for keycloak: {{ base_username }}"
   become: true
