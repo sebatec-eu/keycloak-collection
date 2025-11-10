@@ -10,7 +10,7 @@ ContainerName=keycloak
 Image=quay.io/keycloak/keycloak:26.4
 Pull=newer
 ; Exec=start --optimized
-Exec=start --proxy-headers forwarded --hostname-strict=false --http-enabled=true --features-disabled="admin-fine-grained-authz,authorization,ciba,dpop,impersonation,kerberos,opentelemetry,par"
+Exec=start --proxy-headers forwarded --hostname-strict=false --http-enabled=true --features-disabled="admin-fine-grained-authz,authorization,ciba,dpop,impersonation,kerberos,opentelemetry,par"{% if keycloak_hostname != 'UNSET' %} --hostname={{ keycloak_hostname }}{% endif %}
 
 Environment=KC_HEALTH_ENABLED=true
 Environment=KC_METRICS_ENABLED=true
