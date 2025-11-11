@@ -18,6 +18,11 @@
     - "{{ keycloak_pod_file }}"
     - "{{ keycloak_postgres_container_file }}"
     - "{{ keycloak_keycloak_container_file }}"
+- name: Ensure export directory
+  ansible.builtin.file:
+    path: "{{ keycloak_export_directory }}"
+    state: directory
+    mode: "0770"
 - name: Provide pod file
   ansible.builtin.template:
     mode: "u+wr,g+rw,o+r"

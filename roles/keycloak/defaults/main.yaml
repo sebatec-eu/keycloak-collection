@@ -13,3 +13,4 @@ keycloak_bootstrap_admin:
   password: UNSET
 keycloak_publish_port: 127.0.0.1:8080
 keycloak_hostname: UNSET
+keycloak_export_directory: "~/exports"
