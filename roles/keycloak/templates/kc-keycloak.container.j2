@@ -7,7 +7,7 @@ TimeoutStartSec=900
 [Container]
 Pod=kc.pod
 ContainerName=keycloak
-Image=quay.io/keycloak/keycloak:26.4
+Image={{ keycloak_keycloak_image }}
 Pull=newer
 ; Exec=start --optimized
 Exec=start --proxy-headers xforwarded --hostname-strict=false --http-enabled=true --features-disabled="admin-fine-grained-authz,authorization,ciba,dpop,impersonation,kerberos,opentelemetry,par"{% if keycloak_hostname != 'UNSET' %} --hostname={{ keycloak_hostname }}{% endif %}
