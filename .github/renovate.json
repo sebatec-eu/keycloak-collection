@@ -13,8 +13,12 @@
   },
   "packageRules": [
     {
-      "matchManagers": ["regex"],
-      "matchUpdateTypes": ["pin"],
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchUpdateTypes": [
+        "pin"
+      ],
       "enabled": false
     }
   ],
