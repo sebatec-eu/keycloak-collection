@@ -11,6 +11,13 @@
       "enabled": true
     }
   },
+  "packageRules": [
+    {
+      "matchManagers": ["regex"],
+      "matchUpdateTypes": ["pin"],
+      "enabled": false
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
