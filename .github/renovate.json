@@ -14,7 +14,9 @@
   "packageRules": [
     {
       "description": "Disable pinning for regex manager Docker images",
-      "matchManagers": ["regex"],
+      "matchManagers": [
+        "custom.regex"
+      ],
       "pinDigests": false
     }
   ],
