@@ -4,6 +4,7 @@ TimeoutStartSec=900
 [Container]
 ContainerName=postgres
 Pod=kc.pod
+AutoUpdate=registry
 Image={{ keycloak_postgres_image }}
 Volume=pgdata:/var/lib/postgresql:Z
 Environment=POSTGRES_USER=keycloak

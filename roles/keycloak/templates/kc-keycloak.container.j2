@@ -8,7 +8,7 @@ TimeoutStartSec=900
 Pod=kc.pod
 ContainerName=keycloak
 Image={{ keycloak_keycloak_image }}
-Pull=newer
+AutoUpdate=registry
 ; Exec=start --optimized
 Exec=start --proxy-headers xforwarded --hostname-strict=false --http-enabled=true --features-disabled="admin-fine-grained-authz,authorization,ciba,dpop,impersonation,kerberos,opentelemetry,par"{% if keycloak_hostname != 'UNSET' %} --hostname={{ keycloak_hostname }}{% endif %}
 

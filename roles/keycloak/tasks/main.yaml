@@ -108,3 +108,9 @@
     state: absent
   notify: "Restart keycloak daemon"
   when: not keycloak_bootstrap_mode
+- name: Enable and start podman-auto-update timer
+  ansible.builtin.systemd:
+    scope: user
+    name: podman-auto-update.timer
+    enabled: true
+    state: started
