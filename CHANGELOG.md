@@ -55,4 +55,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Caddy systemd service management now properly handled without redundant become directives
 - Keycloak-specific systemd and user setup properly isolated to keycloak role
 
-[2.0.0]: https://github.com/youruser/keycloak-collection/releases/tag/v2.0.0
+[2.0.0]: https://github.com/sebatec-eu/keycloak-collection/releases/tag/v2.0.0
