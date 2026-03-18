@@ -1,5 +1,4 @@
 {
-  "name": "keycloak-collection",
   "image": "ghcr.io/sebatec-eu/python-devcontainer:1",
   "features": {
     "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
@@ -28,8 +27,6 @@
       ]
     }
   },
-  "runArgs": ["--userns=keep-id"],
   "containerUser": "vscode",
   "onCreateCommand": "uv tool install ansible-lint && uv tool install ansible"
-  //   "postCreateCommand": "make setup"
 }
