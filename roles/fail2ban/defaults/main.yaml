@@ -1,3 +1,5 @@
+fail2ban_packages:
+  - fail2ban
 fail2ban_systemd_sysout_path: /etc/systemd/system/fail2ban.service.d/10-sysout.conf
 fail2ban_jail_backend: systemd
 fail2ban_jail_action: UNSET

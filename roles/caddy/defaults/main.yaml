@@ -1,3 +1,4 @@
+caddy_packages: ["caddy"]
 caddy_caddyfile_path: /etc/caddy/Caddyfile
 caddy_service_unit: caddy.service
 caddy_default_hostname: ":80"

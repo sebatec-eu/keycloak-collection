@@ -1,5 +1,8 @@
+- name: Install required packages for caddy
+  ansible.builtin.apt:
+    name: "{{ caddy_packages }}"
+    state: present
 - name: Provide Caddyfile file
-  become: true
   ansible.builtin.template:
     mode: "u+wr,g+r,o+r"
     src: Caddyfile.j2
@@ -7,7 +10,6 @@
     # validate: /usr/bin/caddy validate --config "%s"
   notify: "Restart caddy service"
 - name: Ensure caddy is running
-  become: true
   ansible.builtin.systemd_service:
     name: "{{ caddy_service_unit }}"
     enabled: true

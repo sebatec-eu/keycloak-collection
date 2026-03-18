@@ -1,4 +1,9 @@
 ---
+- name: Include user creation
+  become: true
+  become_user: root
+  ansible.builtin.import_tasks:
+    file: ./create_user.yaml
 - name: Check variables of postgres
   ansible.builtin.assert:
     that: keycloak_postgres_password != 'UNSET'

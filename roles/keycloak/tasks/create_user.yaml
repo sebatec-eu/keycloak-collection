@@ -1,0 +1,17 @@
+---
+- name: Install required packages (fail2ban, podman, caddy)
+  ansible.builtin.apt:
+    name: "{{ keycloak_packages }}"
+    install_recommends: "{{ keycloak_packages_install_recommends }}"
+    state: present
+- name: "Create user for keycloak: {{ keycloak_username }}"
+  ansible.builtin.user:
+    name: "{{ keycloak_username }}"
+    create_home: true
+    uid_min: "{{ keycloak_uid_min }}"
+    uid_max: "{{ keycloak_uid_max }}"
+  register: _keycloak_userinfo
+- name: "Enable lingering for user {{ keycloak_username }}"
+  ansible.builtin.command: "loginctl enable-linger {{ _keycloak_userinfo.uid }}"
+  args:
+    creates: "/var/lib/systemd/linger/{{ keycloak_username }}"

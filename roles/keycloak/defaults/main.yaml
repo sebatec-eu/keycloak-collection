@@ -1,3 +1,17 @@
+keycloak_packages_install_recommends: true
+keycloak_packages:
+  - acl
+  - catatonit
+  - curl
+  - htop
+  - jq
+  - passt
+  - podman
+  - uidmap
+keycloak_username: keycloak
+keycloak_uid_min: 1500
+keycloak_uid_max: 1599
+
 keycloak_pod_name: kc
 keycloak_pod_file: "~/.config/containers/systemd/{{ keycloak_pod_name }}.pod"
 keycloak_postgres_image: docker.io/library/postgres:18
