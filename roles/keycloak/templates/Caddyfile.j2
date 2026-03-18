@@ -1,0 +1,27 @@
+{{ ansible_managed | comment }}
+{{ keycloak_caddy_hostname }} {
+	log
+	skip_log /resources* # XXX: Prior to v2.8.0 this directive was named skip_log rather then log_skip
+	reverse_proxy {{ keycloak_caddy_endpoint }}
+}
+
+{% for domain, realms in keycloak_caddy_realms | groupby("domain") %}
+{{ domain }} {
+	# Enable logging for fail2ban
+	log
+	skip_log /resources* # XXX: Prior to v2.8.0 this directive was named skip_log rather then log_skip
+
+	{% if realms|length <= 1 %}
+	redir / /realms/{{ realms.0.name }}/account/
+	rewrite /.well-known/openid-configuration /realms/{{ realms.0.name }}/.well-known/openid-configuration
+	{% endif %}
+
+	@realms path /resources/* {% for realm in realms %} /realms/{{ realm.name }} /realms/{{ realm.name }}/*{% endfor %}
+
+	handle @realms {
+		reverse_proxy {{ keycloak_caddy_endpoint }}
+	}
+
+	respond "Forbidden" 403
+}
+{% endfor %}

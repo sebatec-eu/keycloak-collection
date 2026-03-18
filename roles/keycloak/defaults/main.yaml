@@ -30,3 +30,9 @@ keycloak_bootstrap_admin:
 keycloak_publish_port: 127.0.0.1:8080
 keycloak_hostname: UNSET
 keycloak_export_directory: "~/exports"
+
+keycloak_caddy_service_unit: caddy.service
+keycloak_caddyfile_path: /etc/caddy/sites-enabled/keycloak.conf
+keycloak_caddy_hostname: ":80"
+keycloak_caddy_realms: []
+keycloak_caddy_endpoint: 127.0.0.1:8080

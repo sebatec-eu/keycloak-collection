@@ -119,3 +119,8 @@
     name: podman-auto-update.timer
     enabled: true
     state: started
+- name: Configure caddy
+  become: true
+  become_user: root
+  ansible.builtin.import_tasks:
+    file: ./caddy.yaml

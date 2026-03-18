@@ -1,0 +1,13 @@
+---
+- name: Ensure path to caddy file
+  ansible.builtin.file:
+    state: directory
+    path: "{{ keycloak_caddyfile_path | dirname }}"
+    mode: "u=rwx,g=rx,o=rx"
+- name: Provide Caddyfile file
+  ansible.builtin.template:
+    mode: "u+wr,g+r,o+r"
+    src: Caddyfile.j2
+    dest: "{{ keycloak_caddyfile_path }}"
+    # validate: /usr/bin/caddy validate --config "%s"
+  notify: "Reload caddy service"

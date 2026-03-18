@@ -7,7 +7,7 @@
     caddy_global_options:
       # - debug
       - auto_https off
-    caddy_realms:
+    keycloak_caddy_realms:
       - name: testrealm
         domain: http://localhost:8081
     keycloak_postgres_password: ..test..

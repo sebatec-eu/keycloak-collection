@@ -14,3 +14,9 @@
     scope: user
     name: kc-keycloak.service
     state: restarted
+- name: Reload caddy service
+  become: true
+  become_user: root
+  ansible.builtin.systemd_service:
+    name: "{{ keycloak_caddy_service_unit }}"
+    state: reloaded
