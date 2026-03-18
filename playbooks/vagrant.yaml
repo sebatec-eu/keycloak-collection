@@ -23,10 +23,10 @@
           - htop
         state: present
   roles:
+    - role: caddy
+      become: true
     - role: keycloak
       become: true
       become_user: "keycloak"
-    - role: caddy
-      become: true
     - role: fail2ban
       become: true

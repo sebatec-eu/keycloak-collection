@@ -2,6 +2,11 @@
   ansible.builtin.apt:
     name: "{{ caddy_packages }}"
     state: present
+- name: Ensure sites enabled folder
+  ansible.builtin.file:
+    state: directory
+    path: "{{ caddy_sites_enabled_directory }}"
+    mode: "u=rwx,g=rx,o=rx"
 - name: Provide Caddyfile file
   ansible.builtin.template:
     mode: "u+wr,g+r,o+r"
