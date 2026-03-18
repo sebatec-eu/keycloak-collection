@@ -10,7 +10,7 @@ fail2ban_jail_recidive_enabled: false
 
 fail2ban_keycloak_filter_path: "/etc/fail2ban/filter.d/keycloak.local"
 fail2ban_keycloak_jail_path: "/etc/fail2ban/jail.d/keycloak.local"
-fail2ban_keycloak_jail_enabled: true
+fail2ban_keycloak_jail_enabled: false
 fail2ban_keycloak_jail_backend: systemd[journalflags=1]
 fail2ban_keycloak_jail_ignoreself: false
 fail2ban_keycloak_jail_port: http,https
