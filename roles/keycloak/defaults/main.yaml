@@ -14,7 +14,7 @@ keycloak_uid_max: 1599
 
 keycloak_pod_name: kc
 keycloak_pod_file: "~/.config/containers/systemd/{{ keycloak_pod_name }}.pod"
-keycloak_postgres_image: docker.io/library/postgres:18
+keycloak_postgres_image: docker.io/library/postgres:19
 keycloak_postgres_container_file: "~/.config/containers/systemd/{{ keycloak_pod_name }}-postgres.container"
 keycloak_postgres_volume_file: "~/.config/containers/systemd/pgdata.volume"
 keycloak_postgres_secrets_file: "~/.postgres.env"
